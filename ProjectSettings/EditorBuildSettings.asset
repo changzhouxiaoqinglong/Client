@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 36079e9eee053e240bc57128e0243e4c
+  - enabled: 1
+    path: Assets/Scenes/EndTrain.unity
+    guid: 1d963ddca9e9ea24aa9974fc9b6c53ca
+  - enabled: 1
+    path: Assets/Scenes/LoginScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/BaseTaskScene.unity
+    guid: 9d55ba7b310c57c4980b07c97c9f6334
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Basin.unity
+    guid: ea049ce354a0f8e4a9719937c6d33646
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/City.unity
+    guid: 4554dfab70ee0a947bd1a8e228de8509
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Gobi.unity
+    guid: 87def020cd0569140b5b4b7b002522ae
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Hills.unity
+    guid: 3ff2a8382b70af24ca0b03ef203002a1
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Mountain.unity
+    guid: c52f84a5b9f875844a6354889767ae59
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Plain.unity
+    guid: ef929ab0d1ccba643824df5f316935eb
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/Plateau.unity
+    guid: a44e582a4e034a142b7dfc210d3b67f8
+  - enabled: 1
+    path: Assets/Scenes/TrainScenes/TrainNo3DScene.unity
+    guid: d010cef845f791243bea901359b6de25
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 8568ef9f8c4232242a8615a6be80c3f3,
+      type: 2}
