@@ -1,0 +1,591 @@
+var autocomplete;
+var bestRectLayer;
+var geocoder;
+var map;
+var markers = [];
+var provider = "srtm";
+var rectangle;
+var rectLayer;
+var bestResultRect;
+var tileSize = 256;
+var tilelayer;
+var tilegrid;
+
+function AddPOI()
+{
+    CreatePOI(map.getCenter(), "New POI " + (markers.length + 1));
+    
+    $("#POIs").show("fast");
+    UpdateInfo();
+}
+
+function Clip(val, min, max)
+{
+    if (val < min) return min;
+    if (val > max) return max;
+    return val;
+}
+
+function CreatePOI(position, title)
+{
+    var marker = new L.marker(position, {
+        title: title,
+        draggable: true
+    });
+
+    marker.addTo(map);
+    markers.push(marker);
+
+    console.log(marker)
+    
+    marker.on('drag', OnMarkerDrag);
+    
+    var markerPosition = "Lat: " + position.lat + ", Lng: " + position.lng;
+    var el = "<div class='poi ui attached segment'><div class='ui stackable grid'>";
+    el += "<div class='one wide column poiIndex'>" + markers.length + "</div>";
+    el += "<div class='four wide column poiTitle'>" + title + "</div>";
+    el += "<div class='ten wide column poiPosition'>" + markerPosition + "</div>";
+    el += "<div class='one wide column poiDelete'><i class='icon trash alternate'></i></div>";
+    el += "</div></div>";
+    $("#poiContainer").append(el);
+    
+    $(".poiTitle:last").dblclick(OnPOITitleDoubleClick);
+    var lastDelete = $(".poiDelete").last();
+    lastDelete.find("i").popup({
+        title: "Delete",
+        position: "top center"
+    });
+    lastDelete.click(OnDeletePOI);
+    
+    $('html, body').animate({
+        scrollTop: $("#poiContainer").offset().top
+    }, 500);
+}
+
+function GenerateLinks()
+{
+    if (provider == "srtm") GenerateLinksSRTM();
+    else if (provider == "srtm30") GenerateLinksSRTM30();
+}
+
+function GenerateLinksSRTM()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+    var x1 = sw.lng;
+    var x2 = ne.lng;
+    var y1 = ne.lat;
+    var y2 = sw.lat;
+    var x1u = Math.floor(x1 / 5) * 5 + 180;
+    var x2u = Math.floor(x2 / 5) * 5 + 180;
+    var y1u = 90 - Math.floor(y1 / 5) * 5;
+    var y2u = 90 - Math.floor(y2 / 5) * 5;
+
+    var el = $("#dlHeightmaps");
+
+    el.text("");
+    $("#dlTextures").text("");
+    var server = "http://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/ASCII/";
+
+    for (var x = x1u; x <= x2u; x += 5)
+    {
+        for (var y = y1u; y <= y2u; y += 5)
+        {
+            var ax = Math.floor(x / 5 + 1);
+            var ay = Math.floor(y / 5 - 6);
+            var filename = "srtm_" + ((ax > 9)? ax: "0" + ax) + "_" + ((ay > 9)? ay: "0" + ay);
+            var e = "<a class='ui icon button' href='" + server + filename + ".zip'><i class='icon download'></i>" + filename + "</a>";
+            el.append(e);
+        }
+    }
+
+    var links = $("#download-links-srtm");
+    links.show("fast");
+
+    $('html, body').animate({
+        scrollTop: links.offset().top
+    }, 500);
+}
+
+function GenerateLinksSRTM30()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+    var x1 = sw.lng;
+    var x2 = ne.lng;
+    var y1 = ne.lat;
+    var y2 = sw.lat;
+    var x1u = Math.floor(x1 + 180) - 180;
+    var x2u = Math.floor(x2 + 180) - 180;
+    var y1u = Math.floor(y1 + 90) - 90;
+    var y2u = Math.floor(y2 + 90) - 90;
+
+    var el = $("#dlHeightmaps30");
+
+    el.text("");
+    $("#dlTextures").text("");
+    var server = "https://e4ftl01.cr.usgs.gov/MODV6_Dal_D/SRTM/SRTMGL1.003/2000.02.11/";
+
+    for (var x = x1u; x <= x2u; x++)
+    {
+        for (var y = y2u; y <= y1u; y++)
+        {
+            var ax = x < 0 ? "W" : "E";
+            var absX = Math.abs(x);
+            if (absX < 100) ax += "0";
+            if (absX < 10) ax += "0";
+            ax += absX;
+
+            var ay = y < 0 ? "S" : "N";
+            var absY = Math.abs(y);
+            if (absY < 10) ay += "0";
+            ay += absY;
+
+            var filename = ay + ax + ".SRTMGL1.hgt.zip";
+
+            var e = "<a class='ui icon button' href='" + server + filename + "' target='_blank'><i class='icon download'></i>" + filename + "</a>";
+            el.append(e);
+        }
+    }
+
+    var links = $("#download-links-srtm30");
+    links.show("fast");
+
+    $('html, body').animate({
+        scrollTop: links.offset().top
+    }, 500);
+}
+
+function Initialize() 
+{
+    var bounds = L.latLngBounds(
+        [Coords.bry, Coords.tlx], 
+        [Coords.tly, Coords.brx]);
+
+    L.mapbox.accessToken = 'pk.eyJ1IjoidmVydGF4IiwiYSI6ImNpazJpZTV5bjM5Y2t2M2x6dTZsaHp5dnMifQ.lJSONY0lKX6m5h9V9rGWkA';
+    map = L.mapbox.map('map-canvas')
+        .setView(bounds.getCenter(), 12)
+        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/satellite-v9'));
+
+    map.addControl(L.mapbox.geocoderControl('mapbox.places', {
+        keepOpen: true,
+        autocomplete: true,
+        position: "topright"
+    }));
+
+    map.fitBounds(bounds);
+
+    var GridInfo = L.GridLayer.extend({
+        createTile: function () {
+            var tile = document.createElement('div');
+            tile.className = "infotile";
+            tile.style.outline = '1px solid black';
+    
+            return tile;
+        }
+    });
+
+    tilelayer = L.layerGroup().addTo(map);
+    tilegrid = new GridInfo();
+
+    map.createPane('p1');
+    map.createPane('p2');
+
+    map.getPane('p1').style.zIndex = 2;
+    map.getPane('p2').style.zIndex = 3;
+    
+    rectangle = L.rectangle(bounds, {
+        color: "#000000", 
+        weight: 1,
+        draggable: true,
+        transform: true,
+        pane: "p2"
+    });
+
+    rectangle.addTo(map);
+    rectangle.transform.setOptions({rotation: false, scaling: true, drag: false, uniformScaling: false});
+    rectangle.transform.enable();
+    rectangle.dragging.disable();
+    rectangle.on('transform', UpdateInfo);
+    rectangle.on('drag', UpdateInfo);
+
+    if ($("#showgrid").prop("checked")) tilelayer.addLayer(tilegrid);
+
+    bestResultRect = L.rectangle(bounds, {
+        color: "#00FF00", 
+        weight: 2,
+        pane: "p1"
+    });
+
+    if ($("#bestrect").prop("checked"))
+    {
+        bestRectLayer.addTo(map);
+        $("#btnSelectBestRect").show();
+    }
+    
+    UpdateBestRect();
+    
+    if (typeof(POI) != 'undefined')
+    {
+        for (var i = 0; i < POI.length; i++)
+        {
+            var p = POI[i];
+            CreatePOI(new google.maps.LatLng(p.y, p.x), p.title);
+        }
+        if (POI.length > 0) $("#POIs").removeClass("hidden");
+    }
+    
+    UpdateInfo();
+    
+    var clipboard = new Clipboard("#copyBtn");
+    $('#copyBtn').popup({
+        on: "click",
+        title: 'Copied',
+        content: 'Now click "Insert the coordinates from the clipboard" in Real World Terrain.'
+    });
+
+    provider = $("#elevation-provider").find('option:selected').val();
+
+    $("#bestrectHint").popup();
+
+    $("#btnCreateSelector").click(ShowRectangle);
+    $("#btnAddPOI").click(AddPOI);
+    $("#btnShowLinks").click(GenerateLinks);
+    $("#btnOpenOSM").click(OnShowOSM);
+    $("#elevation-provider").change(OnChangeProvider);
+    $("#showgrid").change(OnToggleGrid);
+    $("#bestrect").change(OnToggleBestRect);
+    $("#btnSelectBestRect").click(SelectBestRect);
+}
+
+function MoveSelectorDown()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+
+    var off = ne.lat - sw.lat;
+
+    var ne2 = L.latLng(ne.lat - off, ne.lng);
+    var sw2 = L.latLng(sw.lat - off, sw.lng);
+
+    bounds = L.latLngBounds(sw2, ne2);
+
+    rectangle.setBounds(bounds);
+    rectangle.transform.reset();
+    UpdateInfo();
+}
+
+function MoveSelectorLeft()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+
+    var off = ne.lng - sw.lng;
+
+    var ne2 = L.latLng(ne.lat, ne.lng - off);
+    var sw2 = L.latLng(sw.lat, sw.lng - off);
+
+    rectangle.setBounds(L.latLngBounds(sw2, ne2));
+    rectangle.transform.reset();
+    UpdateInfo();
+}
+
+function MoveSelectorRight()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+
+    var off = ne.lng - sw.lng;
+
+    var ne2 = L.latLng(ne.lat, ne.lng + off);
+    var sw2 = L.latLng(sw.lat, sw.lng + off);
+
+    rectangle.setBounds(L.latLngBounds(sw2, ne2));
+    rectangle.transform.reset();
+    UpdateInfo();
+}
+
+function MoveSelectorUp()
+{
+    var bounds = rectangle.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+
+    var off = ne.lat - sw.lat;
+
+    var ne2 = L.latLng(ne.lat + off, ne.lng);
+    var sw2 = L.latLng(sw.lat + off, sw.lng);
+
+    rectangle.setBounds(L.latLngBounds(sw2, ne2));
+    rectangle.transform.reset();
+    UpdateInfo();
+}
+
+function OnChangeProvider()
+{
+    provider = $("#elevation-provider").find('option:selected').val();
+    if (provider == "srtm" || provider == "srtm30") $("#btnShowLinks").show();
+    else $("#btnShowLinks").hide();
+    
+    $("#download-links-srtm").hide();
+    $("#download-links-srtm30").hide();
+    
+    UpdateInfo();
+}
+
+function OnDeletePOI()
+{
+    var index = $(".poiDelete").index($(this));
+    var marker = markers.splice(index, 1)[0];
+    marker.setMap(null);
+    $(this).parent().parent().remove();
+    
+    if (markers.length > 0)
+    {
+        $(".poiIndex").each(function(index) {
+            $(this).text(index + 1);
+        })
+    }
+    else $("#POIs").hide("fast");
+    UpdateInfo();
+}
+
+function OnKeyDown(event)
+{
+    if (event.ctrlKey == 1) 
+    {
+        rectangle.dragging.enable();
+        for(i = 0; i < markers.length; i++) markers[i].setDraggable(true);
+    }
+}
+
+function OnKeyUp(event)
+{
+    if (event.ctrlKey == 0) 
+    {
+        rectangle.dragging.disable();
+        for(i = 0; i < markers.length; i++) markers[i].setDraggable(false);
+    }
+}
+
+function OnMarkerDrag()
+{
+    var markerIndex = markers.indexOf(this);
+    var position = this.getLatLng();
+    var markerPosition = "Lat: " + position.lat + ", Lng: " + position.lng;
+    $(".poi .poiPosition").eq(markerIndex).text(markerPosition);
+    UpdateInfo();
+}
+
+function OnPOITitleDoubleClick()
+{
+    var newTitle = prompt("POI title:", $(this).text());
+    
+    if (newTitle != null) 
+    {
+        $(this).text(newTitle);
+        var index = $(".poiTitle").index($(this));
+        markers[index].options.title = newTitle;
+        UpdateInfo();
+    }
+}
+
+function OnShowOSM()
+{
+    var center = map.getCenter();
+    var win = window.open("http://www.openstreetmap.org/#map=" + map.getZoom() + "/" + center.lat + "/" + center.lng, '_blank');
+    win.focus();
+}
+
+function OnToggleBestRect()
+{
+    if ($("#bestrect").prop("checked"))
+    {
+        bestResultRect.addTo(map);
+        $("#btnSelectBestRect").show();
+    }
+    else
+    {
+        bestResultRect.removeFrom(map);
+        $("#btnSelectBestRect").hide();
+    }
+}
+
+function OnToggleGrid()
+{
+    if ($("#showgrid").prop("checked")) tilelayer.addLayer(tilegrid);
+    else tilelayer.removeLayer(tilegrid);
+}
+
+function Repeat(value, minValue, maxValue)
+{
+    var range = maxValue - minValue;
+    while (value < minValue || value > maxValue)
+    {
+        if (value < minValue) value += range;
+        else value -= range;
+    }
+    return value;
+}
+
+function SelectBestRect()
+{
+    rectangle.setBounds(bestResultRect.getBounds());
+    rectangle.transform.reset();
+    UpdateInfo();
+}
+
+function SelectText(containerid) 
+{
+    if (document.selection) 
+    {
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select();
+    } 
+    else if (window.getSelection) 
+    {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().addRange(range);
+    }
+    new Clipboard('.btn', {
+    	text: function(trigger) {
+        	return $("#" + containerid).text();
+	    }
+	});
+}
+
+function ShowRectangle()
+{
+    var center = map.getCenter();
+    var bounds = map.getBounds();
+    var bne = bounds.getNorthEast();
+    var bsw = bounds.getSouthWest();
+    var x1 = Repeat(bsw.lng, -180, 180);
+    var y1 = Repeat(bne.lat, -90, 90);
+    var x2 = Repeat(bne.lng, -180, 180);
+    var y2 = Repeat(bsw.lat, -90, 90);
+    var cx = Repeat(center.lng, -180, 180);
+    var cy = Repeat(center.lat, -90, 90);
+    var ne = L.latLng(cy + (y1 - cy) * 0.7, cx + (cx - x1) * 0.7);
+    var sw = L.latLng(cy + (y2 - cy) * 0.7, cx + (cx - x2) * 0.7);
+    rectangle.setBounds(L.latLngBounds(sw, ne));
+    rectangle.transform.reset();
+    UpdateInfo();
+    $("#map-coord").show("fast");
+}
+
+function UpdateBestRect()
+{
+    var zoom = map.getZoom() + 3;
+    var bounds = bestResultRect.getBounds();
+
+    var ne = map.project(bounds.getNorthEast(), zoom);
+    var sw = map.project(bounds.getSouthWest(), zoom);
+
+    ne.x = Math.round(ne.x / 256) * 256;
+    ne.y = Math.round(ne.y / 256) * 256;
+    sw.x = Math.round(sw.x / 256) * 256;
+    sw.y = Math.round(sw.y / 256) * 256;
+
+    ne = map.unproject(ne, zoom);
+    sw = map.unproject(sw, zoom);
+
+    bestResultRect.setBounds(L.latLngBounds(sw, ne));
+}
+
+function UpdateInfo()
+{
+    const trans = rectangle.transform;
+    const coords = rectangle.getLatLngs()[0];
+    const matrix = trans._matrix;
+    const map = rectangle._map;
+    function transform(coord) {
+        return map.layerPointToLatLng(
+            matrix.transform(map.latLngToLayerPoint(coord))
+        );
+    }
+
+    var ne = transform(coords[2]);
+    var sw = transform(coords[0]);
+
+    if (ne.lat < sw.lat)
+    {
+        var t = ne.lat;
+        ne.lat = sw.lat;
+        sw.lat = t;
+    }
+    if (ne.lng < sw.lng)
+    {
+        var t = ne.lng;
+        ne.lng = sw.lng;
+        sw.lng = t;
+    }
+    
+    $("#TLLat").text(ne.lat);
+    $("#TLLon").text(sw.lng);
+    $("#BRLat").text(sw.lat);
+    $("#BRLon").text(ne.lng);
+
+    var D2R = Math.PI / 180.0;
+    var R = 6371;
+
+    var scfY = Math.sin(ne.lat * D2R);
+    var sctY = Math.sin(sw.lat * D2R);
+    var ccfY = Math.cos(ne.lat * D2R);
+    var cctY = Math.cos(sw.lat * D2R);
+    var cX = Math.cos((sw.lng - ne.lng) * D2R);
+    var sizeX1 = Math.abs(R * Math.acos(scfY * scfY + ccfY * ccfY * cX));
+    var sizeX2 = Math.abs(R * Math.acos(sctY * sctY + cctY * cctY * cX));
+    sizeX = ((sizeX1 + sizeX2) / 2.0);
+    sizeY = (R * Math.acos(scfY * sctY + ccfY * cctY));
+
+    $("#AreaWidth").text(sizeX.toFixed(2));
+    $("#AreaHeight").text(sizeY.toFixed(2));
+    $("#AreaArea").text((sizeX * sizeY).toFixed(2));
+
+    bestResultRect.setBounds(L.latLngBounds(sw, ne));
+    UpdateBestRect();
+
+    $("div").removeClass("wrong");
+    var wrong = false;
+    if (provider == "srtm" || provider == "srtm30")
+    {
+        if (ne.lat > 60 || ne.lat < -60) { $("#topLatRow").addClass("wrong"); wrong = true;}
+        if (sw.lat > 60 || sw.lat < -60) { $("#bottomLatRow").addClass("wrong"); wrong = true;}
+    }
+
+    if (!wrong)
+    {
+        var hasMarkers = markers.length > 0;
+        var str = '<Coords tlx="' + sw.lng + '" tly="' + ne.lat + '" brx="' + ne.lng + '" bry="' + sw.lat + '"' + (hasMarkers?"": "/") + '>';
+        if (hasMarkers)
+        {
+            str += "<POIs>";
+            
+            for (var i = 0; i < markers.length; i++)
+            {
+                var marker = markers[i];
+                var position = marker.getLatLng();
+                str += '<POI x="' + position.lng + '" y="' + position.lat + '">' + marker.options.title + "</POI>";
+            }
+            
+            str += "</POIs>";
+            str += "</Coords>";
+        }
+        
+        $("#coordNode").text(str);
+    }
+    else
+    {
+        $("#coordNode").text("Wrong latitude");
+    }
+}
+
+$(Initialize);
