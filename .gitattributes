@@ -1,0 +1,4 @@
+Assets/Model/CarModel/106/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Model/CarModel/ZJ/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/RWT_Result/2024-03-31[[:space:]]10-40/*.asset filter=lfs diff=lfs merge=lfs -text
+Assets/VehiclePhysics/Environment/BYF102/*.fbx filter=lfs diff=lfs merge=lfs -text
