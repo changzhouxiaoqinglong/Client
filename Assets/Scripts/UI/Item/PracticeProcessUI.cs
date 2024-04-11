@@ -22,7 +22,8 @@ public class PracticeProcessUI : MonoBehaviour
     /// 提示字大小值
     /// </summary>
     private Vector3 tipAnimScale = new Vector3(1.3f, 1.3f, 1.3f);
-
+    public Text messagecontent;
+    string inittext;
     private void Awake()
     {       
         //不需要流程控制提示
@@ -42,6 +43,7 @@ public class PracticeProcessUI : MonoBehaviour
     private void Start()
     {
         Init();
+        
     }
 
     private void SetCurTip(string str)
@@ -65,6 +67,7 @@ public class PracticeProcessUI : MonoBehaviour
     private void Init()
     {
         SetCurTip(TaskMgr.GetInstance().curTaskCtr.practiceProcessCtr.curProcess.GetCurTip());
+        inittext = messagecontent.text;
     }
 
     /// <summary>
@@ -75,6 +78,19 @@ public class PracticeProcessUI : MonoBehaviour
         if (param is StringEvParam strParam)
         {
             SetCurTip(strParam.value);
+           // print(strParam.index-1);
+            
+         
+            System.Text.RegularExpressions.MatchCollection matches = System.Text.RegularExpressions.Regex.Matches(inittext, "\n");
+          //  print(matches.Count);
+        
+            string temp = inittext;
+            temp=temp.Insert(0, @"<color=green>");
+            if("全部完成!" != strParam.value)
+            temp=temp.Insert(matches[strParam.index - 1].Index+13, @"</color>");
+            else
+                temp = temp.Insert(temp.Length, @"</color>");
+            messagecontent.text = temp;
         }
     }
 
@@ -83,8 +99,10 @@ public class PracticeProcessUI : MonoBehaviour
     /// </summary>
     private void OnGetErrorTipEv(IEventParam param)
     {
+        
         if (param is StringEvParam strParam)
         {
+            UIMgr.GetInstance().ShowToast(strParam.value);
             SetErrorTip(strParam.value);
         }
     }

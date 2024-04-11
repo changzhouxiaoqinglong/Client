@@ -3,9 +3,11 @@
 public class StringEvParam : IEventParam
 {
     public string value;
-    public StringEvParam(string value)
+    public int index;
+    public StringEvParam(string value,int _index=-1)
     {
-        this.value = value;
+        this.value = value;       
+        this.index = _index;
     }
 }
 

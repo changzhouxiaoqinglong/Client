@@ -76,12 +76,12 @@ public class PracticeProcessBase
         if (curIndex < processList.Count)
         {
             //更新提示
-            EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_TIP, new StringEvParam(processList[curIndex].Tip));
+            EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_TIP, new StringEvParam(processList[curIndex].Tip, curIndex));
         }
         else
         {
             //完成
-            EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_TIP, new StringEvParam("全部完成!"));
+            EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_TIP, new StringEvParam("全部完成!", curIndex));
         }
         EventDispatcher.GetInstance().DispatchEvent(EventNameList.CLEAR_ERROR_PROCESS_TIP);
     }
