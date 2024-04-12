@@ -123,6 +123,8 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
     protected override void Awake()
     {
         base.Awake();
+
+        transform.Find("MessageView/提示信息框").gameObject.transform.localScale=Vector3.zero;
         backGroundAll = transform.Find("BackGroundAll");
         endBtn = transform.Find("endBtn").GetComponent<ButtonBase>();
         endBtn.RegistClick(OnClickEnd);
@@ -180,7 +182,8 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
             || TaskMgr.GetInstance().curTaskData.Id == ExTaskId.BASE_PREVENT_102)
             && AppConfig.CAR_ID == CarIdConstant.ID_102);
         setInfare102Root.SetActive(TaskMgr.GetInstance().curTaskData.Id == ExTaskId.BASE_INFARE_102 && AppConfig.CAR_ID == CarIdConstant.ID_102);
-       // LoadBackGround();
+        // LoadBackGround();
+        EventDispatcher.GetInstance().AddEventListener(EventNameList.OnClick_tasktipview, ShowPanel);
     }
 
     /// <summary>
@@ -307,5 +310,18 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
         //发给设备管理软件
         NetManager.GetInstance().SendMsg(ServerType.GuideServer, JsonTool.ToJson(model), NetProtocolCode.INFARED_TELEMETRY_DRUG_DATA_102, NetManager.GetInstance().CurDeviceForward);
     }
-    #endregion
+	#endregion
+
+    void ShowPanel(IEventParam param)
+	{
+        // transform.localScale = Vector3.one;
+        transform.Find("MessageView/提示信息框").transform.localScale = Vector3.one; ;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+       
+        EventDispatcher.GetInstance().RemoveEventListener(EventNameList.OnClick_tasktipview, ShowPanel);
+    }
 }

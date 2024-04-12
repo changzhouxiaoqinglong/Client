@@ -1,4 +1,5 @@
 ﻿
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -20,9 +21,16 @@ public class TaskTipView : ViewBase<TaskTipViewModel>
         okBtn.RegistClick(OnClickClose);
     }
 
-    protected override void Start()
+	protected override void OnClickClose(GameObject obj)
+	{
+		base.OnClickClose(obj);
+        EventDispatcher.GetInstance().DispatchEvent(EventNameList.OnClick_tasktipview);
+    }
+
+	protected override void Start()
     {
         base.Start();
         taskDesc.text = NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.TaskDesc;
+        
     }
 }
