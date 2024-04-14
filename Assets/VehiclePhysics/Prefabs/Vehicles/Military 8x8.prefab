@@ -5438,6 +5438,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     targetClutchRPM: 1500
+    IsInit: 1
   axles:
   - leftWheel:
       brakeCoefficient: 1
@@ -14959,6 +14960,8 @@ MonoBehaviour:
   smoothing: 0.1
   distanceSmoothing: 0.05
   followTargetsRotation: 1
+  mouseX: 0
+  mouseY: 0
 --- !u!1 &1870071983676090
 GameObject:
   m_ObjectHideFlags: 0

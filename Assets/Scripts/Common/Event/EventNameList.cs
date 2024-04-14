@@ -125,4 +125,9 @@ public class EventNameList
     /// 训练流程错误提示语
     /// </summary>
     public const string PRACTICE_PROCESS_ERROR_TIP = "PracticeProcessErrorTip";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string OnClick_tasktipview = "OnClicktasktipview";
 }
