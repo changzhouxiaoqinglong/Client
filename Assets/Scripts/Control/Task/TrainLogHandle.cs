@@ -129,6 +129,8 @@ public class TrainLogHandle
         {NetProtocolCode.POWER_OP_106,  typeof(PowerOp106Model)},
         //106电台
         {NetProtocolCode.RadioStation_OP_106,  typeof(RadioStationOp106Model)},
+         //操作106毒剂报警器
+        {NetProtocolCode.POISON_ALARM_OP_106, typeof(PoisonAlarmOp106Model)},
     };
 
     public TrainLogHandle()

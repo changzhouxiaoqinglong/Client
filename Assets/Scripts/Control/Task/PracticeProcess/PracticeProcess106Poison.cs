@@ -18,14 +18,42 @@ public class PracticeProcess106Poison : PracticeProcessBase
     {
         base.Init(taskId);
         NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.POISON_ALARM_OP_106, OnGetPoisonAlarmOpMsg);
+        NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.SET_SetReliefThreshold, OnGetRadioDoseThresholdMsg);
     }
+
+    private void OnGetRadioDoseThresholdMsg(IEventParam param)
+    {
+        //已完成所有步骤
+        if (IsFinish()) return;
+
+        if (param is TcpReceiveEvParam tcpReceiveEvParam)
+        {
+            SetReliefThreshold model = JsonTool.ToObject<SetReliefThreshold>(tcpReceiveEvParam.netData.Msg);
+
+
+
+            if (model.ReliefThreshold>0.35f&& model.ReliefThreshold < 0.45f)
+			{
+                DoProcess(Poison106Id.SetReliefThreshold_106);
+               // Debug.Log("设置减压阀数据0.35~0.45MPa");
+            }
+            else if (model.ReliefThreshold == 0)
+            {
+                DoProcess(Poison106Id.SetReliefThreshold_0_106);
+               // Debug.Log("设置减压阀数据归零");
+            }
+           
+        }
+
+    }
+
 
     /// <summary>
     /// 操作毒剂报警器
     /// </summary>
     private void OnGetPoisonAlarmOpMsg(IEventParam param)
     {
-        Logger.LogError("dsc");
+       // Logger.LogError("dsc");
         //已完成所有步骤
         if (IsFinish())
         {
@@ -37,7 +65,7 @@ public class PracticeProcess106Poison : PracticeProcessBase
             switch (model.Type)
             {
                 case PoisonAlarmOp106Type.kaiguanji:
-                    Debug.LogWarning("106kaiguanji");
+                    //Debug.LogWarning("106kaiguanji");
                     DoProcess(model.Operate == OperateDevice.OPEN ? Poison106Id.POISON_ALARM_OPEN_106 : Poison106Id.POISON_ALARM_CLOSE_106);
                     break;
                 case PoisonAlarmOp106Type.jinqi:
@@ -50,7 +78,12 @@ public class PracticeProcess106Poison : PracticeProcessBase
                 case PoisonAlarmOp106Type.danqi:
                     DoProcess(model.Operate == OperateDevice.OPEN ? Poison106Id.POISON_ALARM_OPEN_DANQI_106 : Poison106Id.POISON_ALARM_CLOSE_DANQI_106);
                     break;
-               
+                case PoisonAlarmOp106Type.yure:    
+                    if (model.Operate == OperateDevice.OPEN)
+                    {
+                        DoProcess(Poison106Id.POISON_ALARM_YURE_106);
+                    }
+                    break;
                 case PoisonAlarmOp106Type.jinyang:
 
                     if (model.Operate == OperateDevice.OPEN)
@@ -77,7 +110,7 @@ public class PracticeProcess106Poison : PracticeProcessBase
                             else
                             {
                                 //提示进样不足
-                                EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_ERROR_TIP, new StringEvParam("进样时间不足！"));
+                                EventDispatcher.GetInstance().DispatchEvent(EventNameList.PRACTICE_PROCESS_ERROR_TIP, new StringEvParam("进样超过5秒结束！"));
                             }
                         }
                     }
@@ -89,12 +122,7 @@ public class PracticeProcess106Poison : PracticeProcessBase
                         DoProcess(Poison106Id.POISON_ALARM_106);
                     }
                     break;
-                case PoisonAlarmOp106Type.EleOn:
-
-                    break;
-                case PoisonAlarmOp106Type.Check:
-
-                    break;
+               
             }
         }
     }
@@ -141,7 +169,8 @@ public class PracticeProcess106Poison : PracticeProcessBase
 
     public override void End()
     {
-        base.End();
-        NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.POISON_ALARM_OP, OnGetPoisonAlarmOpMsg);
+        base.End();       
+        NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.POISON_ALARM_OP_106, OnGetPoisonAlarmOpMsg);
+        NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.SET_SetReliefThreshold, OnGetRadioDoseThresholdMsg);
     }
 }

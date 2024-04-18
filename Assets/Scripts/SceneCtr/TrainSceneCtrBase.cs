@@ -73,6 +73,7 @@ public class TrainSceneCtrBase : SceneCtrBase
     /// </summary>    
     public void SetGasTime(IEventParam param)
     {
+        print("设置车载侦毒器抽气时间");
         if (param is FloatEvParam floatParam)
         {
             SetCarPoisonGasTime model = new SetCarPoisonGasTime()

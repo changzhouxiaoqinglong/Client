@@ -65,7 +65,8 @@ public class MessageTitle : MonoBehaviour
     public void SetText(string text)
     {
         msgText.text = text;
-        this.DelayInvoke(0, () =>
+        
+        this.DelayInvoke(0.1f, () =>
         {
             //更新滑动条到最底端
             scrollRect.verticalNormalizedPosition = 0;
@@ -75,5 +76,18 @@ public class MessageTitle : MonoBehaviour
     private void OnClickThis(GameObject obj)
     {
         EventDispatcher.GetInstance().DispatchEvent(EventNameList.CLICK_MSG_TITLE, new ClickMsgTitleEvParam(curType));
+    }
+
+	private void Update()
+	{
+		//if(Input.GetKeyDown(KeyCode.Space))
+		//{
+  //          scrollRect.verticalNormalizedPosition = 1;
+  //      }
+  //      if (Input.GetKeyDown(KeyCode.A))
+  //      {
+  //          scrollRect.verticalNormalizedPosition = 0;
+  //      }
+
     }
 }

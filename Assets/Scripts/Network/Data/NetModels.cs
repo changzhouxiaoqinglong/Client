@@ -533,10 +533,11 @@ public class CarDetectPoisonOpModel : ITaskLogModel
 public class SetCarPoisonGasTime
 {
     /// <summary>
-    /// 时间 s
+    /// 抽气时间
     /// </summary>
     public float Time;
 }
+
 #endregion
 
 #region 电台
@@ -2511,16 +2512,12 @@ public class PoisonAlarmOp106Type
 
     public const int alarm = 6;
 
-    /// <summary>
-    /// 上电
-    /// </summary>
-    public const int EleOn = 7;
+    
 
     /// <summary>
-    /// 自检
+    /// yure
     /// </summary>
-    public const int Check = 8;
-
+    public const int yure = 7;
 }
 
 /// <summary>
@@ -2557,10 +2554,9 @@ public class PoisonAlarmOp106Model : ITaskLogModel
                 return "106毒剂报警器：" + (Operate == OperateDevice.OPEN ? "开始进样" : "停止进样");
             case PoisonAlarmOp106Type.alarm:
                 return "106毒剂报警器：" + (Operate == OperateDevice.OPEN ? "开始报警" : "停止报警");
-            case PoisonAlarmOp106Type.EleOn:
-                return "106毒剂报警器：" + (Operate == OperateDevice.OPEN ? "上电" : "离线");
-            case PoisonAlarmOp106Type.Check:
-                return "106毒剂报警器：" + (Operate == OperateDevice.OPEN ? "自检开始" : "自检结束");
+            
+            case PoisonAlarmOp106Type.yure:
+                return "106毒剂报警器：" + (Operate == OperateDevice.OPEN ? "预热开始" : "预热结束");
             default:
                 return "";
         }
@@ -2574,6 +2570,17 @@ public class PoisonAlarmOp106Model : ITaskLogModel
 public class PoisonAlarmStatCtr106Model
 {
     public int Operate;
+}
+
+/// <summary>
+/// 设置减压阀数据
+/// </summary>
+public class SetReliefThreshold
+{
+    /// <summary>
+    /// 减压阀数据
+    /// </summary>
+    public float ReliefThreshold;
 }
 
 #endregion

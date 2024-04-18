@@ -32,8 +32,12 @@ public class PracticeProcess02BDrug : PracticeProcessBase
             CarDetectPoisonOpModel model = JsonTool.ToObject<CarDetectPoisonOpModel>(tcpReceiveEvParam.netData.Msg);
             switch (model.Type)
             {
-                case CarDetectPoisonOpType.Pump: DoProcess(model.Operate == OperateDevice.OPEN ? DrugId.DRUG_PUMP_OPEN : DrugId.DRUG_PUMP_CLOSE); break;
-                case CarDetectPoisonOpType.Heat: DoProcess(model.Operate == OperateDevice.OPEN ? DrugId.DRUG_HEAT_OPEN : DrugId.DRUG_HEAT_CLOSE); break;
+                case CarDetectPoisonOpType.Pump: 
+                    DoProcess(model.Operate == OperateDevice.OPEN ? DrugId.DRUG_PUMP_OPEN : DrugId.DRUG_PUMP_CLOSE); 
+                    break;
+                case CarDetectPoisonOpType.Heat: 
+                    DoProcess(model.Operate == OperateDevice.OPEN ? DrugId.DRUG_HEAT_OPEN : DrugId.DRUG_HEAT_CLOSE); 
+                    break;
             }
         }
     }

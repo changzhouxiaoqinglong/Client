@@ -17,10 +17,10 @@ public class PracticeProcess02BRadio : PracticeProcessBase
     {
         //已完成所有步骤
         if (IsFinish()) return;
-
+      
         if (param is TcpReceiveEvParam tcpReceiveEvParam)
         {
-            DoProcess(RadioId.RADIOM_RATE_THRESHOLD);
+            DoProcess(RadioId.RADIOM_RATE_THRESHOLD);           
         }
     }
 

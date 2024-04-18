@@ -413,67 +413,89 @@ public class RadioStation384Id
 
 public class Poison106Id
 {
-    /// <summary>
-    /// 106毒剂报警器开机
-    /// </summary>
-    public const int POISON_ALARM_OPEN_106 = 410;
+    
 
     /// <summary>
     /// 进气口保护罩打开
     /// </summary>
-    public const int POISON_ALARM_OPEN_PROTECT_106 = 411;
+    public const int POISON_ALARM_OPEN_PROTECT_106 = 407;
 
     /// <summary>
     /// 零气开
     /// </summary>
-    public const int POISON_ALARM_OPEN_LINGQI_106 = 412;
+    public const int POISON_ALARM_OPEN_LINGQI_106 = 408;
 
 
     /// <summary>
     /// 氮气开
     /// </summary>
-    public const int POISON_ALARM_OPEN_DANQI_106 = 413;
+    public const int POISON_ALARM_OPEN_DANQI_106 = 409;
 
     /// <summary>
-    /// 106进样
+    /// 106设置减压阀数据
     /// </summary>
-    public const int POISON_ALARM_JINYANG_106 = 414;
+    public const int SetReliefThreshold_106 = 410;
 
     /// <summary>
-    /// 进样超过5秒后结束
+    /// 106毒剂报警器开机
     /// </summary>
-    public const int POISON_ALARM_END_JINYANG_106 = 415;
+    public const int POISON_ALARM_OPEN_106 = 411;
 
-    /// <summary>
-    /// 毒剂报警器 报警
-    /// </summary>
-    public const int POISON_ALARM_106 = 416;
-
-    /// <summary>
-    /// 毒剂报警器关机
-    /// </summary>
-    public const int POISON_ALARM_CLOSE_106 = 417;
-
-    
-
-    /// <summary>
-    /// 进气口保护罩关闭
-    /// </summary>
-    public const int POISON_ALARM_ClOSE_PROTECT_106 = 418;
-
-    
-
-    /// <summary>
-    /// 零气关
-    /// </summary>
-    public const int POISON_ALARM_CLOSE_LINGQI_106 = 419;
+    //106毒剂报警器预热
+    public const int POISON_ALARM_YURE_106 = 412;
 
    
 
     /// <summary>
+    /// 106进样
+    /// </summary>
+    public const int POISON_ALARM_JINYANG_106 = 413;
+
+    /// <summary>
+    /// 进样超过5秒后结束
+    /// </summary>
+    public const int POISON_ALARM_END_JINYANG_106 = 414;
+
+    /// <summary>
+    /// 毒剂报警器 报警
+    /// </summary>
+    public const int POISON_ALARM_106 = 415;
+
+    
+
+
+    /// <summary>
+    /// 进气口保护罩关闭
+    /// </summary>
+    public const int POISON_ALARM_ClOSE_PROTECT_106 = 416;
+
+
+
+    /// <summary>
+    /// 零气关
+    /// </summary>
+    public const int POISON_ALARM_CLOSE_LINGQI_106 = 417;
+
+
+
+    /// <summary>
     /// 氮气关
     /// </summary>
-    public const int POISON_ALARM_CLOSE_DANQI_106 = 420;
+    public const int POISON_ALARM_CLOSE_DANQI_106 = 418;
+
+    /// <summary>
+    /// 106减压阀数据归零
+    /// </summary>
+    public const int SetReliefThreshold_0_106 = 419;
+
+    /// <summary>
+    /// 毒剂报警器关机
+    /// </summary>
+    public const int POISON_ALARM_CLOSE_106 = 420;
+
+
+
+
 
 }
 

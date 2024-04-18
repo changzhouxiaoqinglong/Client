@@ -170,15 +170,15 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
     private void InitUi()
     {
         //辐射仪基本训练 才会展示发送剂量率的ui
-        doseRoot.SetActive(IsShowSetDoseBtn());
+        //doseRoot.SetActive(IsShowSetDoseBtn());
         //车载侦毒器基本训练 要设置抽气时间
-        gasTimeRoot.SetActive(IsShowGasTimeBtn());
+        //gasTimeRoot.SetActive(IsShowGasTimeBtn());//新版修改 抽气放在device里
         instructBtn.gameObject.SetActive(AppConfig.SEAT_ID == SeatType.MASTER);
         endBtn.gameObject.SetActive(IsShowEndBtn());
-        set384Root.SetActive(AppConfig.CAR_ID == CarIdConstant.ID_384C);
+       // set384Root.SetActive(AppConfig.CAR_ID == CarIdConstant.ID_384C);//新版修改 去掉384设置ui
         setDrug384Root.SetActive(TaskMgr.GetInstance().curTaskData.Id == ExTaskId.BASE_POISON_384 && AppConfig.CAR_ID == CarIdConstant.ID_384C);
 
-        set102Root.SetActive(AppConfig.CAR_ID == CarIdConstant.ID_102);
+       // set102Root.SetActive(AppConfig.CAR_ID == CarIdConstant.ID_102);//新版修改 去掉102设置ui
         setDrug102Root.SetActive((TaskMgr.GetInstance().curTaskData.Id == ExTaskId.BASE_POISON_102
             || TaskMgr.GetInstance().curTaskData.Id == ExTaskId.BASE_PREVENT_102)
             && AppConfig.CAR_ID == CarIdConstant.ID_102);

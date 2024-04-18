@@ -23,6 +23,6 @@ public class BaseTaskViewModel : ViewModelBase
     /// </summary>    
     public void SetGasTime(float time)
     {
-        EventDispatcher.GetInstance().DispatchEvent(EventNameList.SET_POIS_GAS_TIME, new FloatEvParam(time));
+      //  EventDispatcher.GetInstance().DispatchEvent(EventNameList.SET_POIS_GAS_TIME, new FloatEvParam(time));
     }
 }

@@ -393,6 +393,11 @@ public class NetProtocolCode
     /// 操作电台
     /// </summary>
     public const int RadioStation_OP_106 = 10671;
+
+    /// <summary>
+    /// 设置减压阀数据
+    /// </summary>
+    public const int SET_SetReliefThreshold = 10681;
     #endregion
 
     #endregion

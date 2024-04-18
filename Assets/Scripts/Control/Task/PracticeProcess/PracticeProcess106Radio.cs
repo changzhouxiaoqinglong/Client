@@ -48,9 +48,9 @@ public class PracticeProcess106Radio : PracticeProcessBase
                 case RadiomOpType106.OpenClose:
                     DoProcess(model.Operate == OperateDevice.OPEN ? RadioId106.RADIO_OPEN_106 : RadioId106.RADIO_CLOSE_106);
                     break;
-                case RadiomOpType106.Check:
-                    DoProcess(model.Operate == OperateDevice.OPEN ? RadioId106.RADIO_CHECK_106 : RadioId106.RADIO_NO_OPERATE);
-                    break;
+               // case RadiomOpType106.Check:
+               //     DoProcess(model.Operate == OperateDevice.OPEN ? RadioId106.RADIO_CHECK_106 : RadioId106.RADIO_NO_OPERATE);
+               //     break;
             }
         }
     }
