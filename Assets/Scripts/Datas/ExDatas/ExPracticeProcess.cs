@@ -44,6 +44,8 @@
     /// 02b关闭进气帽
     /// </summary>
     public const int POISON_ALARM_CLOSE_INTAKE_02B = 9;
+
+    
 }
 
 public class DrugId
@@ -106,6 +108,78 @@ public class RadioId
     /// 02b车载辐射仪关机
     /// </summary>
     public const int RADIO_CLOSE_02B = 19;
+
+}
+
+public class PowerId
+{
+
+   
+    /// <summary>
+    /// 02b电源开机
+    /// </summary>
+    public const int Power_OPEN_02B = 466;
+
+
+
+    /// <summary>
+    /// 02b电源关机
+    /// </summary>
+    public const int Power_CLOSE_02B = 467;
+
+}
+
+public class RadioStationId
+{
+
+
+    /// <summary>
+    /// 02b电台开机
+    /// </summary>
+    public const int RadioStation_OPEN_02B = 468;
+
+
+
+    /// <summary>
+    /// 02b电台关机
+    /// </summary>
+    public const int RadioStation_CLOSE_02B = 469;
+
+}
+
+
+public class Power102Id
+{
+
+
+    /// <summary>
+    /// 102电源开机
+    /// </summary>
+    public const int Power_OPEN_102 = 470;
+
+
+
+    /// <summary>
+    /// 102电源关机
+    /// </summary>
+    public const int Power_CLOSE_102 = 471;
+}
+
+public class RadioStation102Id
+{
+
+
+    /// <summary>
+    /// 102电台开机
+    /// </summary>
+    public const int RadioStation_OPEN_102 = 472;
+
+
+
+    /// <summary>
+    /// 102电台关机
+    /// </summary>
+    public const int RadioStation_CLOSE_102 = 473;
 
 }
 
@@ -302,6 +376,40 @@ public class Radiom384Id
     public const int RADIOM384_CLOSE = 283;
 }
 
+public class Power384Id
+{
+
+
+    /// <summary>
+    /// 384电源开机
+    /// </summary>
+    public const int Power_OPEN_384 = 474;
+
+
+
+    /// <summary>
+    /// 384电源关机
+    /// </summary>
+    public const int Power_CLOSE_384 = 475;
+}
+
+public class RadioStation384Id
+{
+
+
+    /// <summary>
+    /// 384电台开机
+    /// </summary>
+    public const int RadioStation_OPEN_384 = 476;
+
+
+
+    /// <summary>
+    /// 384电台关机
+    /// </summary>
+    public const int RadioStation_CLOSE_384 = 477;
+
+}
 
 public class Poison106Id
 {
@@ -423,7 +531,7 @@ public class BiologyId106
     public const int Biology_RATE_THRESHOLD_106 = 429;
 
     /// <summary>
-    /// 106生物模拟器开机
+    /// 106生物模拟器关机
     /// </summary>
     public const int Biology_CLOSE_106 = 430;
 
@@ -434,6 +542,42 @@ public class BiologyId106
 
 
 
+
+}
+
+
+public class Power106Id
+{
+
+
+    /// <summary>
+    /// 106电源开机
+    /// </summary>
+    public const int Power_OPEN_106 = 478;
+
+
+
+    /// <summary>
+    /// 106电源关机
+    /// </summary>
+    public const int Power_CLOSE_106 = 479;
+}
+
+public class RadioStation106Id
+{
+
+
+    /// <summary>
+    /// 106电台开机
+    /// </summary>
+    public const int RadioStation_OPEN_106 = 480;
+
+
+
+    /// <summary>
+    /// 106电台关机
+    /// </summary>
+    public const int RadioStation_CLOSE_106 = 481;
 
 }
 

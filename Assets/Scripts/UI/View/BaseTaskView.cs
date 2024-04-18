@@ -125,6 +125,7 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
         base.Awake();
 
         transform.Find("MessageView/提示信息框").gameObject.transform.localScale=Vector3.zero;
+        transform.Find("MessageView/底部信息框").transform.localScale = Vector3.zero;
         backGroundAll = transform.Find("BackGroundAll");
         endBtn = transform.Find("endBtn").GetComponent<ButtonBase>();
         endBtn.RegistClick(OnClickEnd);
@@ -315,7 +316,8 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
     void ShowPanel(IEventParam param)
 	{
         // transform.localScale = Vector3.one;
-        transform.Find("MessageView/提示信息框").transform.localScale = Vector3.one; ;
+        transform.Find("MessageView/提示信息框").transform.localScale = Vector3.one;
+        transform.Find("MessageView/底部信息框").transform.localScale = Vector3.one; 
     }
 
     protected override void OnDestroy()

@@ -38,6 +38,11 @@ public class ExTaskId
     /// 02B车载侦毒器 基本操作训练
     /// </summary>
     public const int BASE_CAR_POISON_DETECT_02B = 2012;
+
+    public const int BASE_CAR_Power_02B = 2014;
+
+    public const int BASE_CAR_RadioStation_02B = 2016;
+
     #endregion
 
     #region 384
@@ -50,6 +55,18 @@ public class ExTaskId
     /// 384毒剂报警器 基本操作训练
     /// </summary>
     public const int BASE_POISON_384 = 38413;
+
+
+    /// <summary>
+    /// 384电源
+    /// </summary>
+    public const int BASE_Power_384 = 38414;
+
+    /// <summary>
+    /// 384电台
+    /// </summary>
+    public const int BASE_RadioStation_384 = 38416;
+
     #endregion
 
     #region 102
@@ -57,6 +74,16 @@ public class ExTaskId
     /// 102辐射仪 基本操作训练
     /// </summary>
     public const int BASE_RADIOMETE_102 = 10212;
+
+    /// <summary>
+    /// 102电源
+    /// </summary>
+    public const int BASE_Power_102 = 10218;
+
+    /// <summary>
+    /// 102电台
+    /// </summary>
+    public const int BASE_RadioStation_102 = 102110;
 
     /// <summary>
     /// 102三防
@@ -88,6 +115,17 @@ public class ExTaskId
     public const int BASE_RADIOMETE_106 = 10602;
 
     public const int BASE_Biology_106 = 10603;
+
+    /// <summary>
+    /// 106电源
+    /// </summary>
+    public const int BASE_Power_106 = 10607;
+
+    /// <summary>
+    /// 106电台
+    /// </summary>
+    public const int BASE_RadioStation_106 = 10608;
+
     #endregion
 }
 

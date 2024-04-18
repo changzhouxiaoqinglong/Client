@@ -371,6 +371,9 @@ public class PowerOpModel : ITaskLogModel
     }
 }
 
+
+
+
 #endregion
 
 #region 操作北斗
@@ -533,6 +536,48 @@ public class SetCarPoisonGasTime
     /// 时间 s
     /// </summary>
     public float Time;
+}
+#endregion
+
+#region 电台
+public class RadioStationOpType
+{
+    /// <summary>
+    /// 开关
+    /// </summary>
+    public const int OpenClose = 1;
+}
+
+
+/// <summary>
+/// 操作电台
+/// </summary>
+public class RadioStationOpModel : ITaskLogModel
+{
+    /// <summary>
+    /// 操作 0关  1开
+    /// </summary>
+    public int Operate;
+
+    /// <summary>
+    /// 操作类型
+    /// </summary>
+    public int Type;
+
+    /// <summary>
+    /// 获得日志
+    /// </summary>
+    public string GetTaskLog(int seatId)
+    {
+        switch (Type)
+        {
+            case RadioStationOpType.OpenClose:
+                return "电台：" + (Operate == OperateDevice.OPEN ? "开" : "关");
+
+            default:
+                return "";
+        }
+    }
 }
 #endregion
 
@@ -1927,6 +1972,48 @@ public class MeteorOp102Model : ITaskLogModel
 }
 #endregion
 
+#region 102电台
+public class RadioStationOpType102
+{
+    /// <summary>
+    /// 开关
+    /// </summary>
+    public const int OpenClose = 1;
+}
+
+
+/// <summary>
+/// 操作电台
+/// </summary>
+public class RadioStationOp102Model : ITaskLogModel
+{
+    /// <summary>
+    /// 操作 0关  1开
+    /// </summary>
+    public int Operate;
+
+    /// <summary>
+    /// 操作类型
+    /// </summary>
+    public int Type;
+
+    /// <summary>
+    /// 获得日志
+    /// </summary>
+    public string GetTaskLog(int seatId)
+    {
+        switch (Type)
+        {
+            case RadioStationOpType102.OpenClose:
+                return "102电台：" + (Operate == OperateDevice.OPEN ? "开" : "关");
+
+            default:
+                return "";
+        }
+    }
+}
+#endregion
+
 /// <summary>
 /// 设置辐射率阈值102
 /// </summary>
@@ -2314,6 +2401,50 @@ public class PowerOp384Model : ITaskLogModel
 
 #endregion
 
+#region 384电台
+public class RadioStationOpType384
+{
+    /// <summary>
+    /// 开关
+    /// </summary>
+    public const int OpenClose = 1;
+}
+
+
+/// <summary>
+/// 操作电台
+/// </summary>
+public class RadioStationOp384Model : ITaskLogModel
+{
+    /// <summary>
+    /// 操作 0关  1开
+    /// </summary>
+    public int Operate;
+
+    /// <summary>
+    /// 操作类型
+    /// </summary>
+    public int Type;
+
+    /// <summary>
+    /// 获得日志
+    /// </summary>
+    public string GetTaskLog(int seatId)
+    {
+        switch (Type)
+        {
+            case RadioStationOpType384.OpenClose:
+                return "384电台：" + (Operate == OperateDevice.OPEN ? "开" : "关");
+
+            default:
+                return "";
+        }
+    }
+}
+#endregion
+
+
+
 #region 操作电源 106
 
 /// <summary>
@@ -2326,15 +2457,7 @@ public class PowerOp106Type
     /// </summary>
     public const int OpenClose = 1;
 
-    /// <summary>
-    /// 输出
-    /// </summary>
-    public const int OutPut = 3;
-
-    /// <summary>
-    /// 上电
-    /// </summary>
-    public const int elec = 2;
+    
 }
 
 /// <summary>
@@ -2361,10 +2484,7 @@ public class PowerOp106Model : ITaskLogModel
         {
             case PowerOp106Type.OpenClose:
                 return "电源：" + (Operate == OperateDevice.OPEN ? "开机" : "关机");
-            case PowerOp106Type.OutPut:
-                return "电源：" + (Operate == OperateDevice.OPEN ? "开启输出" : "关闭输出");
-            case PowerOp106Type.elec:
-                return "电源：" + (Operate == OperateDevice.OPEN ? "上电" : "离线");          
+                
             default:
                 return "";
         }
@@ -2611,6 +2731,48 @@ public class SetBiologyThreShold106Model : ITaskLogModel
     public string GetTaskLog(int seatId)
     {
         return "生物模拟器数据监测" + BiologicalData + " " + AppConstant.RADIOM_UNIT;
+    }
+}
+#endregion
+
+#region 106电台
+public class RadioStationOpType106
+{
+    /// <summary>
+    /// 开关
+    /// </summary>
+    public const int OpenClose = 1;
+}
+
+
+/// <summary>
+/// 操作电台
+/// </summary>
+public class RadioStationOp106Model : ITaskLogModel
+{
+    /// <summary>
+    /// 操作 0关  1开
+    /// </summary>
+    public int Operate;
+
+    /// <summary>
+    /// 操作类型
+    /// </summary>
+    public int Type;
+
+    /// <summary>
+    /// 获得日志
+    /// </summary>
+    public string GetTaskLog(int seatId)
+    {
+        switch (Type)
+        {
+            case RadioStationOpType106.OpenClose:
+                return "106电台：" + (Operate == OperateDevice.OPEN ? "开" : "关");
+
+            default:
+                return "";
+        }
     }
 }
 #endregion

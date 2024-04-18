@@ -30,7 +30,7 @@ public class TaskTipView : ViewBase<TaskTipViewModel>
 	protected override void Start()
     {
         base.Start();
-        taskDesc.text = NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.TaskDesc;
+        taskDesc.text = NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.ExTaskData.Desc;
         
     }
 }

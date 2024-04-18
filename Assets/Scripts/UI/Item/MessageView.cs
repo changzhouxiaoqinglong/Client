@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 /// <summary>
 /// 信息展示界面
 /// </summary>
@@ -23,7 +24,20 @@ public class MessageView : MonoBehaviour
     private MessageTitle processTitle;
 
     private Transform basicInfo;
+    /// <summary>
+    /// 显示底部操作信息按钮
+    /// </summary>
+    private bool isMaxInfo = true;
 
+    /// <summary>
+    /// 底部信息框max
+    /// </summary>
+    private ButtonBase MaxInfoBtn;
+
+    /// <summary>
+    /// 底部信息框min
+    /// </summary>
+    private ButtonBase MinInfoBtn;
     private void Awake()
     {
         titles = GetComponentsInChildren<MessageTitle>();
@@ -56,6 +70,11 @@ public class MessageView : MonoBehaviour
         RefreshLog(null);
         //初始化流程，就是提示信息
         InitProcessUI();//
+
+        MaxInfoBtn = transform.Find("底部信息框/BtnMax").GetComponent<ButtonBase>();
+        MaxInfoBtn.RegistClick(OnClickMaxInfoBtn);
+        MinInfoBtn = transform.Find("底部信息框/BtnMin").GetComponent<ButtonBase>();
+        MinInfoBtn.RegistClick(OnClickMinInfoBtn);
 
         #endregion
     }
@@ -215,6 +234,34 @@ public class MessageView : MonoBehaviour
         if (param is ClickMsgTitleEvParam titleParam)
         {
             SelectTitle(titleParam.type);
+        }
+    }
+
+    private void OnClickMaxInfoBtn(GameObject obj)
+    {
+        if (isMaxInfo) return;
+        isMaxInfo = !isMaxInfo;
+        MaxInfoBtn.transform.Find("select").gameObject.SetActive(isMaxInfo);
+        MaxInfoBtn.transform.Find("defult").gameObject.SetActive(!isMaxInfo);
+        MinInfoBtn.transform.Find("select").gameObject.SetActive(!isMaxInfo);
+        MinInfoBtn.transform.Find("defult").gameObject.SetActive(isMaxInfo);
+        if (isMaxInfo)
+        {
+            transform.Find("底部信息框").GetComponent<RectTransform>().DOAnchorPosY(151, 0.5f);
+        }
+    }
+
+    private void OnClickMinInfoBtn(GameObject obj)
+    {
+        if (!isMaxInfo) return;
+        isMaxInfo = !isMaxInfo;
+        MaxInfoBtn.transform.Find("select").gameObject.SetActive(isMaxInfo);
+        MaxInfoBtn.transform.Find("defult").gameObject.SetActive(!isMaxInfo);
+        MinInfoBtn.transform.Find("select").gameObject.SetActive(!isMaxInfo);
+        MinInfoBtn.transform.Find("defult").gameObject.SetActive(isMaxInfo);
+        if (!isMaxInfo)
+        {
+            transform.Find("底部信息框").GetComponent<RectTransform>().DOAnchorPosY(-80, 0.5f);
         }
     }
 

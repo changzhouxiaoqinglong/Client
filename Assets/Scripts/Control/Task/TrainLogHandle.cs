@@ -69,6 +69,9 @@ public class TrainLogHandle
         //操作电源
         {NetProtocolCode.POWER_OP, typeof(PowerOpModel)},
 
+        //操作电台
+        {NetProtocolCode.RadioStation_OP, typeof(RadioStationOpModel)},
+
         //答题上报结果
         {NetProtocolCode.QUESTION_REPORT, typeof(QstReport)},
 
@@ -114,9 +117,18 @@ public class TrainLogHandle
         //102电气象仪
         {NetProtocolCode.METEOR_102,  typeof(MeteorOp102Model)},
 
+          //102电台
+        {NetProtocolCode.RadioStation_OP_102,  typeof(RadioStationOp102Model)},
+
         //384电源
         {NetProtocolCode.POWER_OP_384,  typeof(PowerOp384Model)},
+        //384电台
+        {NetProtocolCode.RadioStation_OP_384,  typeof(RadioStationOp384Model)},
 
+         //106电源
+        {NetProtocolCode.POWER_OP_106,  typeof(PowerOp106Model)},
+        //106电台
+        {NetProtocolCode.RadioStation_OP_106,  typeof(RadioStationOp106Model)},
     };
 
     public TrainLogHandle()

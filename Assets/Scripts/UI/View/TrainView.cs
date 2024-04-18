@@ -181,10 +181,10 @@ public class TrainView : ViewBase<TrainViewModel>
         leftTipBtn.RegistClick(OnClickMessageBtn);
         rightCtlBtn = transform.Find("右侧按钮框/Btn").GetComponent<ButtonBase>();
         rightCtlBtn.RegistClick(OnClickCtlBtn);
-        MaxInfoBtn = transform.Find("MessageView/底部信息框/BtnMax").GetComponent<ButtonBase>();
-        MaxInfoBtn.RegistClick(OnClickMaxInfoBtn);
-        MinInfoBtn = transform.Find("MessageView/底部信息框/BtnMin").GetComponent<ButtonBase>();
-        MinInfoBtn.RegistClick(OnClickMinInfoBtn);
+        //MaxInfoBtn = transform.Find("MessageView/底部信息框/BtnMax").GetComponent<ButtonBase>();
+        //MaxInfoBtn.RegistClick(OnClickMaxInfoBtn);
+        //MinInfoBtn = transform.Find("MessageView/底部信息框/BtnMin").GetComponent<ButtonBase>();
+        //MinInfoBtn.RegistClick(OnClickMinInfoBtn);
         messageView = transform.Find("MessageView/提示信息框").gameObject;
         rightCtlView = transform.Find("右侧按钮框").gameObject;
         gauges = transform.Find("Gauges").gameObject;
