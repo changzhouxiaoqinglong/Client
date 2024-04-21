@@ -53,7 +53,7 @@ public class PoisonAlarm : DeviceBase
     /// </summary>
     protected virtual void ReportCurDrugData()
     {
-        print("上报当前化学信息");
+        //print("上报当前化学信息");
         //浓度
         float dentity = HarmAreaMgr.GetPosDrugDentity(car.GetPosition());
         DrugVarData drugVarData = HarmAreaMgr.GetPosDrugData(car.GetPosition());

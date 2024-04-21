@@ -24,7 +24,7 @@ public class DetPoisonBleedView : ViewBase<DetPoisonBleedViewModel>
     /// <summary>
     /// 设置时间
     /// </summary>
-    private InputField setTime;
+    private Text setTime;
 
     /// <summary>
     /// 提交按钮
@@ -61,13 +61,48 @@ public class DetPoisonBleedView : ViewBase<DetPoisonBleedViewModel>
         base.Awake();
         detPoisonBody = transform.Find("Bleed/DetPoisonBody");
         minuteHand = detPoisonBody.Find("ShowTime/MinuteParent/MinuteHand");
-        setTime = detPoisonBody.Find("SetTime").GetComponent<InputField>();
+        setTime = detPoisonBody.Find("SetTime/Text").GetComponent<Text>();
         closeViewBtn = transform.Find("Content/CloseViewBtn").GetComponent<ButtonBase>();
         closeViewBtn.RegistClick(OnClickCloseViewBtn);
-        submitBtn = detPoisonBody.Find("SubmitBtn").GetComponent<ButtonBase>();
-        submitBtn.RegistClick(OnClickSubmitBtn);
+        //submitBtn = detPoisonBody.Find("SubmitBtn").GetComponent<ButtonBase>();
+        //submitBtn.RegistClick(OnClickSubmitBtn);
         drugPoison02B = (SceneMgr.GetInstance().curScene as TrainSceneCtrBase).virtualCar.GetDevice<VirtualCarDrugPoison02B>();
         NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.OP_CAR_DETECT_POISON, OpenQuesionView);
+
+
+        //新版修改 抽气改为硬件发送
+        NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.SET_CAR_POIS_GAS_TIME, OnGetGasTimeMsg);
+    }
+
+
+    private void OnGetGasTimeMsg(IEventParam param)
+    {
+    
+
+        if (param is TcpReceiveEvParam tcpReceiveEvParam)
+        {
+            SetCarPoisonGasTime model = JsonTool.ToObject<SetCarPoisonGasTime>(tcpReceiveEvParam.netData.Msg);
+            // model.Time=
+
+            if (bleedTime != -1)
+            {
+                UIMgr.GetInstance().ShowToast("不要重复设值");
+                return;
+            }
+
+            if (model.Time==0 || ((int)model.Time > BleedTimeConstant.MAXTIME && (int)model.Time < BleedTimeConstant.MINTIME))
+            {
+                UIMgr.GetInstance().ShowToast("请把时间正确设置在0~180秒之间");
+                return;
+            }
+            setTime.text = model.Time.ToString();
+            bleedTime = model.Time;
+            timeRange = bleedTime;
+            minuteHandAngleZ = -MathsMgr.TimeAngle(BleedTimeConstant.SECONDANGLE, bleedTime);
+            minuteHand.DOLocalRotate(new Vector3(0, 0, minuteHandAngleZ), BleedTimeConstant.MOVETIME);
+
+
+        }
     }
 
     protected override void Start()
@@ -96,15 +131,15 @@ public class DetPoisonBleedView : ViewBase<DetPoisonBleedViewModel>
         timeRange = bleedTime;
         minuteHandAngleZ = -MathsMgr.TimeAngle(BleedTimeConstant.SECONDANGLE, bleedTime);
         minuteHand.DOLocalRotate(new Vector3(0,0, minuteHandAngleZ) , BleedTimeConstant.MOVETIME);
-        EventDispatcher.GetInstance().DispatchEvent(EventNameList.SET_POIS_GAS_TIME, new FloatEvParam(timeRange));
+     //   EventDispatcher.GetInstance().DispatchEvent(EventNameList.SET_POIS_GAS_TIME, new FloatEvParam(timeRange));
     }
 
     private void FixedUpdate()
     {
         if (bleedTime == -1) return;
-        if(drugPoison02B.curPumpState)
+        if(drugPoison02B.curPumpState)//必须开机状态下
         {
-            CountDownBleedTime();
+            CountDownBleedTime();//抽气倒计时
         }
     }
 
@@ -172,6 +207,7 @@ public class DetPoisonBleedView : ViewBase<DetPoisonBleedViewModel>
     {
         base.OnDisable();
         NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.OP_CAR_DETECT_POISON, OpenQuesionView);
+        NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.SET_CAR_POIS_GAS_TIME, OnGetGasTimeMsg);
         OnCloseCallBack?.Invoke();
     }
 }

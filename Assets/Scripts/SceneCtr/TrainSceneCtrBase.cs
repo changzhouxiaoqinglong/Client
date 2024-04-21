@@ -22,7 +22,7 @@ public class TrainSceneCtrBase : SceneCtrBase
         NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.END, OnGetEndTaskEv);
         NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.REQUEST_QUESTION, SendQstRequest);
         EventDispatcher.GetInstance().AddEventListener(EventNameList.SEND_RADIOM_RATE, SendRadiomRate);
-        EventDispatcher.GetInstance().AddEventListener(EventNameList.SET_POIS_GAS_TIME, SetGasTime);
+       // EventDispatcher.GetInstance().AddEventListener(EventNameList.SET_POIS_GAS_TIME, SetGasTime);
         NetManager.GetInstance().AddNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.GUIDE_PROCESS_CTR, OnGetGuideProcessMsg);
     }
 
@@ -159,7 +159,7 @@ public class TrainSceneCtrBase : SceneCtrBase
         NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.END, OnGetEndTaskEv);
         NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.REQUEST_QUESTION, SendQstRequest);
         EventDispatcher.GetInstance().RemoveEventListener(EventNameList.SEND_RADIOM_RATE, SendRadiomRate);
-        EventDispatcher.GetInstance().RemoveEventListener(EventNameList.SET_POIS_GAS_TIME, SetGasTime);
+      //  EventDispatcher.GetInstance().RemoveEventListener(EventNameList.SET_POIS_GAS_TIME, SetGasTime);
         NetManager.GetInstance().RemoveNetMsgEventListener(ServerType.GuideServer, NetProtocolCode.GUIDE_PROCESS_CTR, OnGetGuideProcessMsg);
     }
 
