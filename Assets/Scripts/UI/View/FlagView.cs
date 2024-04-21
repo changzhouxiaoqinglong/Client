@@ -67,7 +67,8 @@ public class FlagView : ViewBase<FlagViewModel>
     /// </summary>
     private void OnClickChemical(GameObject obj)
     {
-        chemicalPage.gameObject.SetActive(true);
+      //  chemicalPage.gameObject.SetActive(true);
+        SendFlagMsg(HarmAreaType.DRUG);
     }
 
     /// <summary>

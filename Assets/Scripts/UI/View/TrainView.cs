@@ -627,11 +627,27 @@ public class TrainView : ViewBase<TrainViewModel>
         */
     }
 
+    float index = 0;   
     /// <summary>
     /// 点击切换视角按钮
     /// </summary>
     private void OnClickChangeBtn(GameObject obj)
     {
+        
+        switch (++index % 3)
+		{
+            case 0:
+                changeViewBtn.GetComponentInChildren<Text>().text = "第三人称视角";
+                break;
+            case 1:
+                changeViewBtn.GetComponentInChildren<Text>().text = "自由视角";
+                break;
+            case 2:
+                changeViewBtn.GetComponentInChildren<Text>().text = "驾驶视角";
+                break;
+        }
+
+       
         EventDispatcher.GetInstance().DispatchEvent(EventNameList.CHANGE_VIEW);
     }
 
