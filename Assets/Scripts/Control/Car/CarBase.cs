@@ -352,7 +352,7 @@ public class CarBase : UnityMono
                 model.TargetId = PoisonType.NO_POISON;
                 model.IsOk = false;
                 print("当前位置无可侦捡对象" + model.TargetId);
-                model.Tip = "当前位置无可侦捡对象！";
+                model.Tip = "未到达袭击区域！";
                 UIMgr.GetInstance().ShowToast(model.Tip);
             }
             ExPoisonData exPoisonData = ExPoisonDataMgr.GetInstance().GetDataById(model.TargetId);
@@ -389,7 +389,7 @@ public class CarBase : UnityMono
         {
             if (tcpParam.netData.MachineId == MachineId)
             {
-                carDoor.DOLocalRotate(Vector3.zero, 1.0f);
+                carDoor.DOLocalRotate(new Vector3(carDoor.localEulerAngles.x,0,0), 1.0f);
             }
         }
     }

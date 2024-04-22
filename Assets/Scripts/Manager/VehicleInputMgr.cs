@@ -140,7 +140,7 @@ public class VehicleInputMgr : InputCtrBase
                     {
                         //换挡
                         vehicleController.transmission.ShiftInto(CustomInput.ShiftLevel);
-                        print("102换挡");
+                       // print("102换挡");
                     }
                     else
                     {

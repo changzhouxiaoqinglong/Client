@@ -44,7 +44,8 @@ public class MessageView : MonoBehaviour
         processTitle = transform.Find("提示信息框/Scroll View").GetComponent<MessageTitle>();
         basicInfo = transform.Find("底部信息框/BasicInformation/Viewport/Content");
         // EventDispatcher.GetInstance().AddEventListener(EventNameList.CLICK_MSG_TITLE, OnClickTitle);
-        EventDispatcher.GetInstance().AddEventListener(EventNameList.REF_SHOW_TASK_LOG, RefreshLog);
+        if (NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.CheckType == CheckTypeConst.PRACTICE)
+            EventDispatcher.GetInstance().AddEventListener(EventNameList.REF_SHOW_TASK_LOG, RefreshLog);
     }
 
     private void Start()
@@ -92,11 +93,12 @@ public class MessageView : MonoBehaviour
     /// </summary>
     private void InitProcessUI()
     {
-        print("任务提示");
+        print("初始化训练流程_CheckType"+ NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.CheckType);
         //单击和考核没有基础训练
         if (NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.CheckType != CheckTypeConst.PRACTICE)
         {
             processTitle.transform.parent.gameObject.SetActive(false);
+            //processTitle.SetText("当前为考核模式不显示具体操作信息");
             return;
         }
         int taskId = TaskMgr.GetInstance().curTaskData.Id;
@@ -186,6 +188,11 @@ public class MessageView : MonoBehaviour
     /// </summary>
     private void RefreshLog(IEventParam param)
     {
+        if (NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.CheckType != CheckTypeConst.PRACTICE)
+		{
+            GetTitleByType(MsgTitleType.Log).SetText("当前为考核模式不显示具体操作信息");
+            return;
+        }
         GetTitleByType(MsgTitleType.Log).SetText(TaskMgr.GetInstance().curTaskCtr.GetTrainLog());
     }
 
