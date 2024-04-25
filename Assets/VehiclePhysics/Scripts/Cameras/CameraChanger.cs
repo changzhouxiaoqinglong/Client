@@ -197,7 +197,8 @@ namespace NWH.VehiclePhysics
         public override void SetEnable()
         {
             gameObject.SetActive(true);
-            base.SetEnable();
+            print("自己的车 启用相机");
+            base.SetEnable();        
         }
 
         public override Camera GetCamera()

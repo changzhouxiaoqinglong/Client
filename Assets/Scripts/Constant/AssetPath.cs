@@ -17,9 +17,19 @@ public class AssetPath
     public const string FM_RECEIVE_SCREEN = "Prefabs/UI/Item/FM_ReceiveScreen";
 
     /// <summary>
+    /// 接收遥测画面 ui
+    /// </summary>
+    public const string FM_RECEIVE_YaoCeSCREEN = "Prefabs/UI/Item/FM_ReceiveYaoCeScreen";
+
+    /// <summary>
     /// 发送同步画面
     /// </summary>
     public const string FM_SEND_SCREEN = "Prefabs/FM_Screen/FM_SendScreen";
+
+    /// <summary>
+    /// 发送遥测同步画面
+    /// </summary>
+    public const string FM_SEND_YaoCeSCREEN = "Prefabs/FM_Screen/FM_SendYaoceScreen";
 
     /// <summary>
     /// minimap 相机路径

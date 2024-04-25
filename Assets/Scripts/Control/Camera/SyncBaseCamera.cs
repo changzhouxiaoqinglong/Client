@@ -16,6 +16,7 @@ public class SyncBaseCamera : BaseCamera
         //而具体场景画面是由其他overlay相机渲染的，为防止两者叠加后 天空盒太阳等元素位置有问题，所以要保持位置旋转一致
         if (SceneMgr.GetInstance().curScene != null && SceneMgr.GetInstance().curScene is Train3DSceneCtrBase scene)
         {
+           // print(scene.cameraMgr.CurMainCamera == null);
             if (scene.cameraMgr.CurMainCamera.GetCamera() != null)
             {
                 transform.position = scene.cameraMgr.CurMainCamera.GetCamera().transform.position;

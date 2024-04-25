@@ -80,8 +80,12 @@ public class Train3DSceneCtrBase : TrainSceneCtrBase
         });
         //画面同步 发送组件
         InitFmSendScreen();
-        //开始记录训练时间
-        TaskMgr.GetInstance().curTaskCtr.trainDateMgr.IsStartTimer = true;
+
+      //  if (AppConfig.CAR_ID == CarIdConstant.ID_102)
+       //     InitFmSendYaoCeScreen();
+
+       //开始记录训练时间
+       TaskMgr.GetInstance().curTaskCtr.trainDateMgr.IsStartTimer = true;
     }
 
     private void Update()
@@ -113,6 +117,25 @@ public class Train3DSceneCtrBase : TrainSceneCtrBase
                 syncCamera.RefreshAllStackTexture();
                 EventDispatcher.GetInstance().DispatchEvent(EventNameList.SYN_BASECAMERA_RENDER);
             }, new WaitForSeconds(0));
+        }
+    }
+
+    /// <summary>
+    /// 生成同步画面 发送组件
+    /// </summary>
+    private void InitFmSendYaoCeScreen()
+    {
+        GameObject sendPrefab = Resources.Load<GameObject>(AssetPath.FM_SEND_SCREEN);
+        GameObject sendScreen = Instantiate(sendPrefab);
+        //编码脚本
+        GameViewEncoder encoder = sendScreen.GetComponentInChildren<GameViewEncoder>();
+        if (encoder != null)
+        {
+          
+          //  encoder.RenderCam = syncCamera.m_Camera;
+            //设置同步渲染分辨率
+           // encoder.Resolution = new Vector3(Screen.width, Screen.height);
+            
         }
     }
 

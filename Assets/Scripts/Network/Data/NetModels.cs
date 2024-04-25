@@ -100,7 +100,7 @@ public class LoginModel
 {
     public string UserName;
 
-    public string PassWord;
+    public string Password;
 
     public int CarId;
 }

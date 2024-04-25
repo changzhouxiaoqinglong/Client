@@ -37,6 +37,7 @@ public class NetVarData
             //更新
             EventDispatcher.GetInstance().DispatchEvent(EventNameList.UPDATE_CAR_PLAYER);
             NetManager.GetInstance().UpdateForwardList(trainMachineDatas);
+            //UnityEngine.Debug.LogError("参加训练的车 席位信息");
         }
     }
 

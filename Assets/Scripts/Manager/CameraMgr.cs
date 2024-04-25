@@ -23,8 +23,12 @@ public class CameraMgr
 
     public CameraMgr()
     {
-        EventDispatcher.GetInstance().AddEventListener(EventNameList.CAMERA_EXCHANGE, ExchangeCamera);
+       // UnityEngine.Debug.Log("CameraMgrCameraMgrCameraMgr");
+       // UnityEngine.Debug.Log(CurMainCamera==null);
+        EventDispatcher.GetInstance().AddEventListener(EventNameList.CAMERA_EXCHANGE, ExchangeCamera);//开始训练有错误的情况下 相机切换就不执行了
         EventDispatcher.GetInstance().AddEventListener(EventNameList.LAST_CAMERA_EXCHANGE, ExchangeLastCamera);
+       // UnityEngine.Debug.Log(CurMainCamera == null);
+       // UnityEngine.Debug.Log("adddddddddd222222111");
     }
 
     /// <summary>
@@ -46,6 +50,7 @@ public class CameraMgr
                 LastMainCamera = CurMainCamera;
             }
             CurMainCamera = cameraItem;
+          //  UnityEngine.Debug.Log(" 切换相机 ");
         }
     }
 

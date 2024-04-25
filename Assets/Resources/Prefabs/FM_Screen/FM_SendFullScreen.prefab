@@ -200,6 +200,7 @@ MonoBehaviour:
         m_CallState: 2
   label: 1001
   dataLength: 0
+  isyaoce: 0
 --- !u!20 &4438248180535838415
 Camera:
   m_ObjectHideFlags: 0

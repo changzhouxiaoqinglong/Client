@@ -44,6 +44,17 @@ public class NetConfig : ConfigBase<NetConfig>
     public static int FM_CLIENT_PORT;
 
     /// <summary>
+    /// 同步102遥测画面Server端监听端口
+    /// </summary>
+    public static int FM_102yaoce_SERVER_PORT;
+
+    /// <summary>
+    /// 同步102遥测画面Client端监听端口
+    /// </summary>
+    public static int FM_102yaoce_CLIENT_PORT;
+
+
+    /// <summary>
     /// 同步全屏画面Server端监听端口
     /// </summary>
     public static int FM_SERVER_FULL_PORT;

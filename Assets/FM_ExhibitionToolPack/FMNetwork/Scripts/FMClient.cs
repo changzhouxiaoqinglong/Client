@@ -169,7 +169,7 @@ public class FMClient : MonoBehaviour
     }
 
     UdpClient Client;
-    static UdpClient ClientListener;
+     UdpClient ClientListener;
     IPEndPoint ServerEp;
     IEnumerator NetworkClientStart()
     {

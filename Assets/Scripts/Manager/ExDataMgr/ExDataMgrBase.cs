@@ -34,7 +34,7 @@ public class ExDataMgrBase<Tmgr, Tdata> : SingleTonBase<Tmgr>
     /// </summary>
     private void InitData()
     {
-        Logger.LogWarning("FILE_NAME: " + FILE_NAME);
+      //  Logger.LogWarning("FILE_NAME: " + FILE_NAME);
         if(FILE_NAME== "QuestionData")
         dataDic.Clear();
         dataList = ExcelSerializer.Deserialize<Tdata>(FILE_NAME);

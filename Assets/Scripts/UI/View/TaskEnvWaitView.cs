@@ -113,6 +113,18 @@ public class TaskEnvWaitView : ViewBase<TaskEvWaitViewModel>
         {
             //收到的数据
             TrainStartModel startModel = JsonTool.ToObject<TrainStartModel>(tcpParam.netData.Msg);
+
+            foreach(TrainMachineVarData machinedata in startModel.TrainMachineDatas)
+			{
+                foreach(TrainSeatVarData user in machinedata.TrainUserDatas)
+				{
+                    user.MachineId = machinedata.MachineId;
+
+                }
+			}
+
+
+            print(startModel.TrainMachineDatas[0].TrainUserDatas==null);
             NetVarDataMgr.GetInstance()._NetVarData._TrainStartModel = startModel;
             //设置参加训练车人数据
             NetVarDataMgr.GetInstance()._NetVarData.TrainMachineDatas = startModel.TrainMachineDatas;

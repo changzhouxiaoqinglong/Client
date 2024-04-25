@@ -35,6 +35,7 @@ public class TimeTool
     /// </summary>
     public static DateTime TransTimeYYYYToDate(string time)
     {
+     //   Debug.Log(time);
         DateTime res;
         if (!DateTime.TryParseExact(time, "yyyyMMddHHmmss", null, System.Globalization.DateTimeStyles.None, out res))
         {

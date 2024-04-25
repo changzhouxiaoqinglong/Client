@@ -102,7 +102,7 @@ public class CarMgr
                 cars.Add(car);
             }
             //更新车上参加训练的人
-            car.playerMgr.UpdatePlayerDatas(trainMachine.TrainSeatDatas);
+            car.playerMgr.UpdatePlayerDatas(trainMachine.TrainUserDatas);
         }
     }
 
@@ -112,6 +112,7 @@ public class CarMgr
     /// <param name="carId">车id</param>
     public CarBase CreateCar(int carId, int machineId, Vector3 pos, float rotate)
     {
+        Debug.Log("生成车辆 carId" + carId);
         ExCarData car = CarExDataMgr.GetInstance().GetDataById(carId);
         GameObject carObj = Resources.Load<GameObject>(car.Res);
         GameObject carIns = Object.Instantiate(carObj, VehicleRoot);

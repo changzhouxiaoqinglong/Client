@@ -74,10 +74,23 @@ public class GameViewEncoder : MonoBehaviour
         if (_CaptureMode != CaptureMode) _CaptureMode = CaptureMode;
     }
 
+    [SerializeField]
+    bool isyaoce=false;//是否接收的是遥测画面
     private void Awake()
     {
         //每辆车  用独有的label值来分组
         label = AppConfig.MACHINE_ID;
+        return;
+        if(isyaoce)
+		{
+
+            
+		}
+        else
+		{
+           
+        }
+        
     }
 
     private void Start()

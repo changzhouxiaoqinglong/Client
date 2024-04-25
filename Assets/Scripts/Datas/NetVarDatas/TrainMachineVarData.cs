@@ -28,13 +28,15 @@ public class TrainMachineVarData
     /// </summary>
     public string Rotate;
 
+    /// <summary>
+    /// 该车参加训练的人的数据
+    /// </summary>
+    public List<TrainSeatVarData> TrainUserDatas;
+    //TrainSeatDatas
+
+
     public bool IsSelf()
     {
         return MachineId == AppConfig.MACHINE_ID;
     }
-
-    /// <summary>
-    /// 该车参加训练的人数据
-    /// </summary>
-    public List<TrainSeatVarData> TrainSeatDatas;
 }

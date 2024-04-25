@@ -57,7 +57,7 @@ public class TcpMessageHandler
     public void ReadMessage()
     {
         //包头大小
-        int headLen = NetConfig.TCP_MESSAGE_HEAD_LEN;
+        int headLen = NetConfig.TCP_MESSAGE_HEAD_LEN+4;
         while (true)
         {
             //数据不足
@@ -66,7 +66,7 @@ public class TcpMessageHandler
                 break;
             }
             //包体大小
-            int bodyLen = BitConverter.ToInt32(datas, 0);
+            int bodyLen = BitConverter.ToInt32(datas, 4);
             //数据包总大小
             int packLen = bodyLen + headLen;
             if (startIndex >= packLen)
@@ -103,14 +103,16 @@ public class TcpMessageHandler
     /// </summary>
     public static byte[] PackMessage(string message)
     {
-        //包体
+        byte[] devicedata = BitConverter.GetBytes(0x352EF853);
+        //消息内容
         byte[] bodyData = Encoding.UTF8.GetBytes(message);
-        //包头
-        byte[] headerBytes = BitConverter.GetBytes(bodyData.Length);
+        //消息长度 4个字节
+        byte[] headerBytes = BitConverter.GetBytes(bodyData.Length);//以字节数组的形式返回指定 32 位有符号整数值,返回长度为 4 的字节数组。
 
-        byte[] temBytes = new byte[headerBytes.Length + bodyData.Length];
-        Buffer.BlockCopy(headerBytes, 0, temBytes, 0, headerBytes.Length);
-        Buffer.BlockCopy(bodyData, 0, temBytes, headerBytes.Length, bodyData.Length);
+        byte[] temBytes = new byte[headerBytes.Length + bodyData.Length + devicedata.Length];
+        Buffer.BlockCopy(devicedata, 0, temBytes, 0, devicedata.Length);
+        Buffer.BlockCopy(headerBytes, 0, temBytes, devicedata.Length, headerBytes.Length);
+        Buffer.BlockCopy(bodyData, 0, temBytes, devicedata.Length + headerBytes.Length, bodyData.Length);
         return temBytes;
     }
 }

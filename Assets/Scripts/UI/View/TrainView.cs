@@ -321,7 +321,17 @@ public class TrainView : ViewBase<TrainViewModel>
            GameObject sysScreenPre = Resources.Load<GameObject>(AssetPath.FM_RECEIVE_SCREEN);
            Instantiate(sysScreenPre, sysScreen);
            print("生成接收画面");
-       }
+
+            if(AppConfig.CAR_ID == CarIdConstant.ID_102)
+			{
+                //  FM_RECEIVE_YaoCeSCREEN
+                GameObject yaoceScreenPre = Resources.Load<GameObject>(AssetPath.FM_RECEIVE_YaoCeSCREEN);
+                Instantiate(yaoceScreenPre, sysScreen);
+                print("生成遥测接收画面");
+            }
+
+           
+        }
        else
        {
            InitMainScreen();

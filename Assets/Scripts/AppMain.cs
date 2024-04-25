@@ -32,7 +32,7 @@ public class AppMain : MonoBehaviour
     /// </summary>
     private void CreateSendAllScreen()
     {
-        GameObject sendPrefab = Resources.Load<GameObject>(AssetPath.FM_SEND_FULL_SCREEN);
-        Instantiate(sendPrefab, dontDestroyNode);
+       // GameObject sendPrefab = Resources.Load<GameObject>(AssetPath.FM_SEND_FULL_SCREEN);
+      //  Instantiate(sendPrefab, dontDestroyNode);
     }
 }

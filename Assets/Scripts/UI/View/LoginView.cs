@@ -37,6 +37,7 @@ public class LoginView : ViewBase<LoginViewModel>
             //未连接导控 先连接导控
             NetManager.GetInstance().ConnectServer(ServerType.GuideServer, (bool res) =>
             {
+                //return;
                 //连接成功
                 if (res)
                 {
@@ -68,7 +69,7 @@ public class LoginView : ViewBase<LoginViewModel>
         LoginModel loginModel = new LoginModel()
         {
             UserName = userName.text,
-            PassWord = password.text,
+            Password = password.text,
             CarId = AppConfig.CAR_ID,
         };
         NetManager.GetInstance().SendMsg(ServerType.GuideServer, JsonTool.ToJson(loginModel), NetProtocolCode.LOGIN);

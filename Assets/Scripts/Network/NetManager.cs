@@ -242,9 +242,9 @@ public class NetManager : MonoSingleTon<NetManager>
         SameTrainDriveSeatsExDevice.Clear();
         SameMachineAllSeats.Clear();
         SameMachineSeatsExDevice.Clear();
-        foreach (var machine in trainMachineDatas)
+        foreach (TrainMachineVarData machine in trainMachineDatas)
         {
-            foreach (var seat in machine.TrainSeatDatas)
+            foreach (TrainSeatVarData seat in machine.TrainUserDatas)
             {
                 //不需要转发自身
                 if (seat.MachineId != AppConfig.MACHINE_ID || seat.SeatId != AppConfig.SEAT_ID)
@@ -300,7 +300,7 @@ public class NetManager : MonoSingleTon<NetManager>
                 LoginModel loginModel = new LoginModel()
                 {
                     UserName = NetVarDataMgr.GetInstance()._NetVarData._UserInfo.userName,
-                    PassWord = NetVarDataMgr.GetInstance()._NetVarData._UserInfo.passWord,
+                    Password = NetVarDataMgr.GetInstance()._NetVarData._UserInfo.passWord,
                     CarId = AppConfig.CAR_ID,
                 };
                 NetManager.GetInstance().SendMsg(ServerType.GuideServer, JsonTool.ToJson(loginModel), NetProtocolCode.LOGIN);

@@ -27,8 +27,8 @@ public class TrainSeatVarData
             {
                 forwardModel = new ForwardModel()
                 {
-                    MachineId = MachineId,
-                    SeatId = SeatId,
+                    MachineId = this.MachineId,
+                    SeatId = this.SeatId,
                 };
             }
             return forwardModel;

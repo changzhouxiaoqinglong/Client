@@ -11,6 +11,8 @@ public class TaskEnvVarData
     /// </summary>
     public int TaskId;
 
+    public string TrainUid;
+
     /// <summary>
     /// 模式 0.单机  1.考核  2.训练
     /// </summary>
