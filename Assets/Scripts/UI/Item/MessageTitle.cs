@@ -66,11 +66,24 @@ public class MessageTitle : MonoBehaviour
     {
         msgText.text = text;
         
-        this.DelayInvoke(0.1f, () =>
-        {
-            //更新滑动条到最底端
-            scrollRect.verticalNormalizedPosition = 0;
-        });
+        if (curType== MsgTitleType.Process)//任务流程 滑动到最上面 因为有的流程特别长  
+		{
+            this.DelayInvoke(0.1f, () =>
+            {
+                //更新滑动条到最顶端
+                scrollRect.verticalNormalizedPosition = 1;
+            });
+        }
+        else
+		{
+            this.DelayInvoke(0.1f, () =>
+            {
+                //更新滑动条到最底端
+                scrollRect.verticalNormalizedPosition = 0;
+            });
+        }
+        
+       
     }
 
     private void OnClickThis(GameObject obj)

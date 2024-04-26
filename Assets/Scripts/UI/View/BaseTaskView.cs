@@ -119,13 +119,14 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
     /// </summary>
     private ButtonBase setInfareBtn102;
     #endregion
-
+    Transform ProcessCtr;
     protected override void Awake()
     {
         base.Awake();
 
-        transform.Find("MessageView/提示信息框").gameObject.transform.localScale=Vector3.zero;
-        transform.Find("MessageView/底部信息框").transform.localScale = Vector3.zero;
+        //  transform.Find("MessageView/提示信息框").gameObject.transform.localScale=Vector3.zero;
+        //   transform.Find("MessageView/底部信息框").transform.localScale = Vector3.zero;
+        ProcessCtr = transform.Find("ProcessCtr");
         backGroundAll = transform.Find("BackGroundAll");
         endBtn = transform.Find("endBtn").GetComponent<ButtonBase>();
         endBtn.RegistClick(OnClickEnd);
@@ -316,8 +317,10 @@ public class BaseTaskView : ViewBase<BaseTaskViewModel>
     void ShowPanel(IEventParam param)
 	{
         // transform.localScale = Vector3.one;
-        transform.Find("MessageView/提示信息框").transform.localScale = Vector3.one;
-        transform.Find("MessageView/底部信息框").transform.localScale = Vector3.one; 
+        // transform.Find("MessageView/提示信息框").transform.localScale = Vector3.one;
+        // transform.Find("MessageView/底部信息框").transform.localScale = Vector3.one;
+        transform.Find("MessageView").transform.gameObject.SetActive(true);
+        ProcessCtr.gameObject.SetActive(true);
     }
 
     protected override void OnDestroy()

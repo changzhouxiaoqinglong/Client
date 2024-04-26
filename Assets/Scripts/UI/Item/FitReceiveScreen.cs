@@ -38,11 +38,11 @@ public class FitReceiveScreen : MonoBehaviour
             //高度超了  就适配宽度
             if (fitHeight > canvasHeight)
             {
-                curRectTransform.sizeDelta = new Vector2(width / height * canvasHeight, canvasHeight);
+             //   curRectTransform.sizeDelta = new Vector2(width / height * canvasHeight, canvasHeight);
             }
             else
             {
-                curRectTransform.sizeDelta = new Vector2(canvasWidth, height / width * canvasWidth);
+            //    curRectTransform.sizeDelta = new Vector2(canvasWidth, height / width * canvasWidth);
             }
             curFitSysRect.width = width;
             curFitSysRect.height = height;

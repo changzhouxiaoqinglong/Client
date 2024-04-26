@@ -37,6 +37,7 @@ public class InfaredTelemetry102 : DeviceBase
     //是否已经上传了侦察结果，不考虑有多个毒剂云团的情况
     bool isSendDetctRes = false;
 
+    public GameObject FM_SendYaoCeScreen;//102遥测窗口画面
 
     #endregion
     #region 方法
@@ -69,6 +70,7 @@ public class InfaredTelemetry102 : DeviceBase
         {
             isUpComplete = 31;
             Debug.Log("上升完成");
+            FM_SendYaoCeScreen.gameObject.SetActive(true);
         });
 
     }
@@ -78,6 +80,7 @@ public class InfaredTelemetry102 : DeviceBase
     /// </summary>
     public void StartDown()
     {
+        FM_SendYaoCeScreen.gameObject.SetActive(false);
         isUpComplete = 0;
         isDownComplete = 20;
         coverPlate.DOLocalRotate(new Vector3(-180f, 0, -0), Speed);
@@ -87,6 +90,7 @@ public class InfaredTelemetry102 : DeviceBase
         {
             isDownComplete = 21;
             Debug.Log("下降完成");
+            
         });
     }
     /// <summary>

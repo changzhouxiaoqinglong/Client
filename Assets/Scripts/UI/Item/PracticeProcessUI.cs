@@ -66,7 +66,7 @@ public class PracticeProcessUI : MonoBehaviour
 
     private void Init()
     {
-        SetCurTip(TaskMgr.GetInstance().curTaskCtr.practiceProcessCtr.curProcess.GetCurTip());
+        //SetCurTip(TaskMgr.GetInstance().curTaskCtr.practiceProcessCtr.curProcess.GetCurTip());
         inittext = messagecontent.text;
     }
 

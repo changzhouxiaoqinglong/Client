@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using DG.Tweening;
 public class FMReceive102YaoCeScreen : MonoBehaviour
 {
     private FMNetworkManager m_NetworkManager;
@@ -27,6 +28,13 @@ public class FMReceive102YaoCeScreen : MonoBehaviour
         if (decoder.ReceivedTexture != null)
         {
             fitScreen.FitScreen(decoder.ReceivedTexture.width, decoder.ReceivedTexture.height);
+        }
+        if (m_NetworkManager.Client != null)
+        {
+            if (m_NetworkManager.Client.IsConnected)
+                GetComponent<RawImage>().DOFade(1, 0);
+            else
+                GetComponent<RawImage>().DOFade(0, 0);
         }
     }
 }
