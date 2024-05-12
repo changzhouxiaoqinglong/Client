@@ -102,11 +102,14 @@ public class SituationSyncLogic
         Vector3 gisPos = train3D.terrainChangeMgr.gisPointMgr.GetGisPos(pos.ToVector3());
         model.PosList.Add(gisPos.ToCustVect3());
         List<HarmData> harmDatas = NetVarDataMgr.GetInstance()._NetVarData._TaskEnvVarData.HarmDatas;
+        
         if (harmDatas.Count == 0) return;
+        
         //毒
         if (harmDatas[0].HarmType == HarmAreaType.DRUG)
         {
             DrugVarData drug = JsonTool.ToObject<DrugVarData>(harmDatas[0].Content);
+            Debug.Log(drug.Id);
             model.EnvironId = drug.Id;
         }
         //辐射

@@ -60,12 +60,16 @@ public class FlagMgr
         Logger.Log(TAG + "InsertFlagLogic");
         GameObject flag = InsertFlag(flagType, pos);
         CustVect3 custPos = pos.ToCustVect3();
+        Vector3 lation = (SceneMgr.GetInstance().curScene as Train3DSceneCtrBase).terrainChangeMgr.gisPointMgr.GetGisPos(pos);
+
         //发送插旗消息
         FlagModel model = new FlagModel()
         {
             FlagType = flagType,
             Pos = custPos,
             Rotate = flag.transform.eulerAngles.ToCustVect3(),
+            Longicude = lation.x,
+            Latitude=lation.y
         };
         //发送插旗数据给导控 并且转发给其他驾驶位进行同步
         NetManager.GetInstance().SendMsg(ServerType.GuideServer, JsonTool.ToJson(model), NetProtocolCode.FLAG, NetManager.GetInstance().SameTrainDriveSeatsExDevice);

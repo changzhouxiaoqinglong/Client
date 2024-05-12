@@ -685,6 +685,15 @@ public class FlagModel
     /// 旋转信息
     /// </summary>
     public CustVect3 Rotate;
+
+    /// <summary>
+    /// 经度
+    /// </summary>
+    public float Longicude;
+    /// <summary>
+    /// 纬度
+    /// </summary>
+    public float Latitude;
 }
 
 /// <summary>
